@@ -42,7 +42,7 @@ export default class CatalogDetailPage {
         evidenceImages: catalog.photoUrl,
         latitudeCoordinate: catalog.lat,
         longitudeCoordinate: catalog.lon,
-        name: catalog.name,
+        createdBy: catalog.name,
         createdAt: catalog.createdAt,
       });
 
@@ -62,7 +62,7 @@ export default class CatalogDetailPage {
 
   populateCatalogDetailError(message) {
     document.getElementById("catalog-detail").innerHTML =
-      generateCatalogDetailErrorTemplate(message);
+      generateCatalogsDetailErrorTemplate(message);
   }
 
   // //
@@ -180,27 +180,27 @@ export default class CatalogDetailPage {
   hideMapLoading() {
     document.getElementById("map-loading-container").innerHTML = "";
   }
-
-  // showCommentsLoading() {
-  //   document.getElementById("comments-list-loading-container").innerHTML =
-  //     generateLoaderAbsoluteTemplate();
-  // }
-
-  // hideCommentsLoading() {
-  //   document.getElementById("comments-list-loading-container").innerHTML = "";
-  // }
-
-  // showSubmitLoadingButton() {
-  //   document.getElementById("submit-button-container").innerHTML = `
-  //     <button class="btn" type="submit" disabled>
-  //       <i class="fas fa-spinner loader-button"></i> Tanggapi
-  //     </button>
-  //   `;
-  // }
-
-  // hideSubmitLoadingButton() {
-  //   document.getElementById("submit-button-container").innerHTML = `
-  //     <button class="btn" type="submit">Tanggapi</button>
-  //   `;
-  // }
 }
+
+// showCommentsLoading() {
+//   document.getElementById("comments-list-loading-container").innerHTML =
+//     generateLoaderAbsoluteTemplate();
+// }
+
+// hideCommentsLoading() {
+//   document.getElementById("comments-list-loading-container").innerHTML = "";
+// }
+
+// showSubmitLoadingButton() {
+//   document.getElementById("submit-button-container").innerHTML = `
+//     <button class="btn" type="submit" disabled>
+//       <i class="fas fa-spinner loader-button"></i> Tanggapi
+//     </button>
+//   `;
+// }
+
+// hideSubmitLoadingButton() {
+//   document.getElementById("submit-button-container").innerHTML = `
+//     <button class="btn" type="submit">Tanggapi</button>
+//   `;
+// }

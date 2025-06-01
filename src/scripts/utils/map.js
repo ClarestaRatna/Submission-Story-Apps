@@ -103,8 +103,8 @@ export default class Map {
       zoom: this.#zoom,
       scrollWheelZoom: false,
       layers: [osm],
+      ...options,
     });
-
     const layerControl = L.control.layers(baseMaps);
     layerControl.addTo(this.#map);
   }

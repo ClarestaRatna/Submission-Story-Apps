@@ -7,12 +7,13 @@ import {
   checkAuthenticatedRoute,
   checkUnauthenticatedRouteOnly,
 } from "../utils/auth.js";
+import BookmarkPage from "../pages/bookmark/bookmark-page.js";
 
 export const routes = {
   "/login": () => checkUnauthenticatedRouteOnly(new LoginPage()),
   "/register": () => checkUnauthenticatedRouteOnly(new RegisterPage()),
-
   "/": () => checkAuthenticatedRoute(new HomePage()),
-  "/stories": () => checkAuthenticatedRoute(new NewPage()),
-  "/stories/:id": () => checkAuthenticatedRoute(new CatalogDetailPage()),
+  "/catalogs": () => checkAuthenticatedRoute(new NewPage()),
+  "/detail/:id": () => checkAuthenticatedRoute(new CatalogDetailPage()),
+  "/bookmark": () => checkAuthenticatedRoute(new BookmarkPage()),
 };

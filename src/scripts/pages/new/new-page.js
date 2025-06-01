@@ -4,6 +4,7 @@ import NewPresenter from "./new-presenter.js";
 import { convertBase64ToBlob } from "../../utils";
 import * as FoodiesAPI from "../../data/api.js";
 import { generateLoaderAbsoluteTemplate } from "../../templates.js";
+import RegisterPage from "../auth/register/register-page.js";
 
 export default class NewPage {
   #presenter;
@@ -15,13 +16,13 @@ export default class NewPage {
 
   async render() {
     return `
-      <section>
+      <section class="mt-4">
         <div class="new-catalog__header">
-          <div class="container">
-            <h1 class="new-catalog__header__title">Buat Katalog Baru</h1>
+          <div class="container text-center">
+            <h1 class="new-catalog__header__title">Bagaimana dengan hari ini?</h1>
             <p class="new-catalog__header__description">
-              Silakan lengkapi formulir di bawah untuk membuat katalog baru.<br>
-              Pastikan katalog yang dibuat adalah <b>valid</b>.
+              Silakan lengkapi formulir di bawah untuk berbagi dengan sesama.<br>
+              Pastikan formulir yang dibuat adalah <b>valid</b>.
             </p>
           </div>
         </div>
@@ -31,17 +32,31 @@ export default class NewPage {
         <div class="new-form__container">
           <form id="new-form" class="new-form">
             <div class="form-control">
-              <label for="title-input" class="new-form__title__title">Judul Katalog</label>
+              <label for="title-input" class="new-form__title__title">Nama</label>
+  
+              <div class="new-form__title__container">
+                <input
+                  id="name-input"
+                  name="name"
+                   disabled
+                  aria-describedby="register-form__name-title"
+                >
+              </div>
+              <div id="title-input-more-info" style= "font-size: 12px"><small><i>Anda dapat menggunakan nama samaran untuk menjadi privasi Anda.</i></small></div>
+            </div>
+
+            <div class="form-control">
+              <label for="title-input" class="new-form__title__title">Judul </label>
   
               <div class="new-form__title__container">
                 <input
                   id="title-input"
                   name="title"
-                  placeholder="Masukkan judul katalogmu "
+                  placeholder="Apa yang ingin Anda ceritakan? "
                   aria-describedby="title-input-more-info"
                 >
               </div>
-              <div id="title-input-more-info">Pastikan judul katalog dibuat dengan jelas.</div>
+              <div id="title-input-more-info" style= "font-size: 12px"><small><i>Pastikan judul katalog dibuat dengan jelas.</i></small></div>
             </div>
            
             <div class="form-control">
@@ -51,7 +66,7 @@ export default class NewPage {
                 <textarea
                   id="description-input"
                   name="description"
-                  placeholder="Masukkan deskripsi lengkap mengenai katalog Anda."
+                  placeholder="Mengapa anda menceritakan hal tersebut?"
                 ></textarea>
               </div>
             </div>
@@ -112,7 +127,7 @@ export default class NewPage {
             </div>
             <div class="form-buttons">
               <span id="submit-button-container">
-                <button class="btn" type="submit">Buat Katalog</button>
+                <button class="btn w-100" type="submit">Berbagi Sekarang</button>
               </span>
               <a class="btn btn-outline" href="#/">Batal</a>
             </div>
@@ -131,6 +146,15 @@ export default class NewPage {
 
     this.#presenter.showNewFormMap();
     this.#setupForm();
+
+    const name = localStorage.getItem("user_name");
+
+    if (name) {
+      const nameInput = document.getElementById("name-input");
+      if (nameInput) {
+        nameInput.value = name;
+      }
+    }
   }
 
   #setupForm() {
@@ -341,14 +365,14 @@ export default class NewPage {
   showSubmitLoadingButton() {
     document.getElementById("submit-button-container").innerHTML = `
       <button class="btn" type="submit" disabled>
-        <i class="fas fa-spinner loader-button"></i> Buat Katalog
+        <i class="fas fa-spinner loader-button"></i>Bagikan Sekarang
       </button>
     `;
   }
 
   hideSubmitLoadingButton() {
     document.getElementById("submit-button-container").innerHTML = `
-      <button class="btn" type="submit">Buat Katalog</button>
+      <button class="btn" type="submit">Bagikan sekarang</button>
     `;
   }
 }

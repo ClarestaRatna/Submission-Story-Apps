@@ -24,6 +24,7 @@ export default class HomePresenter {
       await this.showCatalogsListMap();
 
       const response = await this.#model.getAllCatalogs();
+      // console.log("Response from API:", response);
 
       // if (!response.ok) {
       //   console.error("initialGalleryAndMap: response:", response);
@@ -39,7 +40,7 @@ export default class HomePresenter {
         return;
       }
 
-      this.#view.populateCatalogsList(response.message, response.listCatalog);
+      this.#view.populateCatalogsList(response.message, response.listStory);
     } catch (error) {
       console.error("initialGalleryAndMap: error:", error);
       this.#view.populateCatalogsListError(error.message);

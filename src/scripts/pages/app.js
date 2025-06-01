@@ -86,15 +86,49 @@ export default class App {
     });
   }
 
+  matchRoute(url, routes) {
+    const keys = Object.keys(routes);
+
+    console.group("Route Matching");
+    console.log("URL yang diterima:", url);
+    console.log("Daftar routes yang tersedia:", keys);
+    console.groupEnd();
+
+    for (const key of keys) {
+      // Ubah route ke regex
+      const pattern = new RegExp("^" + key.replace(/:\w+/g, "([\\w-]+)") + "$");
+      if (pattern.test(url)) {
+        return routes[key];
+      }
+    }
+    return null;
+  }
+
   async renderPage() {
     const url = getActiveRoute();
-    const route = routes[url];
+
+    console.group("Render Page");
+    console.log("URL aktif:", url);
+
+    // const route = routes[url];
+    const route = this.matchRoute(url, routes);
+
+    if (!route) {
+      alert("Route tidak ditemukan untuk URL ini. Silakan periksa kembali.");
+      console.groupEnd();
+      return;
+    }
+
+    console.log("Route ditemukan:", route);
 
     // Get page instance
     const page = route();
 
     if (!page) {
       alert("Halaman tidak ditemukan. Silahkan ulangi kembali");
+
+      console.groupEnd();
+
       return;
     }
 
@@ -110,5 +144,7 @@ export default class App {
       scrollTo({ top: 0, behavior: "instant" });
       this.#setupNavigationList();
     });
+
+    console.groupEnd();
   }
 }

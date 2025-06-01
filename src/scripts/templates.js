@@ -1,4 +1,6 @@
+import { parseActivePathname } from "./routes/url-parser";
 import { showFormattedDate } from "./utils";
+import { routes } from "./routes/routes";
 
 export function generateLoaderTemplate() {
   return `
@@ -30,7 +32,7 @@ export function generateUnauthenticatedNavigationListTemplate() {
 export function generateAuthenticatedNavigationListTemplate() {
   return `
     <li id="push-notification-tools" class="push-notification-tools"></li>
-    <li><a id="new-catalog-button" class="btn new-catalog-button" href="#/catalogs">Buat Katalogmu <i class="fas fa-plus"></i></a></li>
+    <li><a id="new-catalog-button" class="btn new-catalog-button" href="#/catalogs">Ayo! Tuliskan tentang diri Anda. <i class="fas fa-plus"></i></a></li>
     <li><a id="logout-button" class="logout-button" href="#/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
   `;
 }
@@ -75,7 +77,7 @@ export function generateCatalogsDetailErrorTemplate(message) {
   return `
     <div id="catalogs-detail-error" class="catalogs-detail__error">
       <h2>Terjadi kesalahan pengambilan detail inputan</h2>
-      <p>${message ? message : 'Gunakan jaringan lain atau laporkan error ini.'}</p>
+      <p>${message ? message : "Gunakan jaringan lain atau laporkan error ini."}</p>
     </div>
   `;
 }
@@ -86,33 +88,38 @@ export function generateCatalogItemTemplate({
   description,
   photoUrl,
   createdAt,
-  coordinate,
+  lat,
+  lon,
 }) {
+  const location = lat && lon ? { lat, lon } : null;
+  // console.log("Catalog coordinate:", coordinate);
   return `
-    <div tabindex="0" class="catalog-item" data-catalogid="${id}">
-      <img class="catalog-item__image" src="${photoUrl}" alt="">
-      <div class="catalog-item__body">
-        <div class="catalog-item__main">
+    <div tabindex="0" class="catalog-item col-sm-12 col-md-6 col-lg-4" data-storyid="${id}" style="box-shadow: 0 2px 8px #c3baba;">
+      <div class="card rounded-3 overflow-hidden h-100 cards">
+        <img class="catalog-item__image" src="${photoUrl}" alt="">
+        <div class="catalog-item__body card-body d-flex flex-column gap-3 justify-content-between">
+          <div class="catalog-item__main">
+            <div class="catalog-item__more-info">
+              <div class="catalog-item__createdat">
+                <i class="fas fa-calendar-alt"></i> ${showFormattedDate(createdAt, "id-ID")}
+              </div>
+              <div class="catalog-item__location">
+                <i class="fas fa-map"></i> ${location ? `Lat: ${location.lat}, Lon: ${location.lon}` : "Tidak tersedia"}
+              </div>
+            </div>
+          </div>
+          <div id="catalog-description" class="catalog-item__description">
+            ${description}
+          </div>
           <div class="catalog-item__more-info">
-            <div class="catalog-item__createdat">
-              <i class="fas fa-calendar-alt"></i> ${showFormattedDate(createdAt, "id-ID")}
-            </div>
-            <div class="catalog-item__location">
-              <i class="fas fa-map"></i> ${Object.values(coordinate)}
+            <div class="catalog-item__author">
+              Dipublikasikan oleh: ${name}
             </div>
           </div>
+          <a href="#/detail/${id}" class="btn catalog-item__read-more">
+            Selengkapnya <i class="fas fa-arrow-right"></i>
+          </a>
         </div>
-        <div id="catalog-description" class="catalog-item__description">
-          ${description}
-        </div>
-        <div class="catalog-item__more-info">
-          <div class="catalog-item__author">
-            Dipublikasikan oleh: ${name}
-          </div>
-        </div>
-        <a class="btn catalog-item__read-more" href="#/catalogs/${id}">
-          Selengkapnya <i class="fas fa-arrow-right"></i>
-        </a>
       </div>
     </div>
   `;

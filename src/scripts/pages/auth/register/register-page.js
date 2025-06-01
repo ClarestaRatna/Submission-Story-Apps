@@ -69,7 +69,12 @@ export default class RegisterPage {
   }
 
   registeredSuccessfully(message) {
-    console.log(message);
+    // console.log(message);
+
+    const name = document.getElementById("name-input").value;
+
+    // Simpan ke localStorage
+    localStorage.setItem("user_name", name);
 
     // Redirect
     location.hash = "/login";

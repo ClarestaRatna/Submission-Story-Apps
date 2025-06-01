@@ -7,7 +7,7 @@ import {
 } from "../../templates.js";
 import HomePresenter from "./home-presenter.js";
 import * as FoodiesAPI from "../../data/api";
-import Map from "../../utils/map.js";
+import Map from "../../utils/map";
 
 export default class HomePage {
   #presenter = null;
@@ -23,7 +23,7 @@ export default class HomePage {
       </section>
 
       <section class="container">
-        <h1 class="section-title">Daftar Katalog</h1>
+        <h1 class="section-title">Daftar Harian</h1>
 
         <div class="catalogs-list__container">
           <div id="catalogs-list"></div>
@@ -39,6 +39,7 @@ export default class HomePage {
       model: FoodiesAPI,
     });
 
+    await this.initialMap();
     await this.#presenter.initialGalleryAndMap();
   }
 
@@ -49,25 +50,31 @@ export default class HomePage {
     }
 
     const html = catalogs.reduce((accumulator, catalog) => {
+      // console.log("Catalog data:", catalog);
+
+      const coordinate =
+        catalog.lat != null && catalog.lon != null
+          ? { lat: catalog.lat, lon: catalog.lon }
+          : null;
+
       // untuk menampilkan ikon dan marker baru pada halaman daftar
-      if (this.#map && story.lat != null && story.lon != null) {
+      if (this.#map && catalog.lat != null && catalog.lon != null) {
         const coordinate = [catalog.lat, catalog.lon];
         const markerOptions = { alt: catalog.name };
         const popupOptions = { content: catalog.description };
         this.#map.addMarker(coordinate, markerOptions, popupOptions);
-        console.log(catalog.description);
       }
 
       return accumulator.concat(
         generateCatalogItemTemplate({
           ...catalog,
-          name: catalog.name,
+          coordinate,
         })
       );
     }, "");
 
     document.getElementById("catalogs-list").innerHTML = `
-      <div class="catalogs-list">${html}</div>
+      <div class="catalogs-list row row-gap-4 justify-content-center">${html}</div>
     `;
   }
 

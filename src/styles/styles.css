@@ -6,10 +6,10 @@
 }
 
 :root {
-  --primary-color: #d97706;
-  --primary-text-color: #ffffff;
-  --primary-hover-color: #b66200;
-  --primary-shadow-color: #d9770699;
+  --primary-color: #c75175;
+  --primary-text-color: #2c2c2c;
+  --primary-hover-color: #d8a7a7;
+  --primary-shadow-color: #c3baba;
 
   --secondary-color: #6c757d;
   --secondary-text-color: #ffffff;
@@ -385,6 +385,9 @@ header {
   text-align: center;
   font-size: 2.5rem;
   padding-block: 50px 40px;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+  box-shadow: 0 4px 10px var(--primary-shadow-color);
 }
 
 /* LOGIN, REGISTER PAGE */
@@ -934,4 +937,14 @@ footer {
 
 .copyright {
   text-align: center;
+}
+
+.catalog-item__image {
+  width: 100%;
+}
+
+#map {
+  height: 400px;
+  width: 100%;
+  border-radius: 8px;
 }
